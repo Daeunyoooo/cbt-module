@@ -308,7 +308,7 @@
     border-radius: 4px;
   }
 
-  /* ── WORKSHEET ── */
+  /* ── WORKSHEET TABLE ── */
   .worksheet-header {
     background: var(--nhs-blue);
     border-radius: var(--radius) var(--radius) 0 0;
@@ -333,70 +333,54 @@
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     margin-bottom: 24px;
   }
-  .ws-row {
-    padding: 20px 24px;
+  .ws-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .ws-table thead th {
+    background: #eaf1fb;
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--nhs-blue);
+    border-bottom: 2px solid var(--nhs-border);
+    text-align: left;
+  }
+  .ws-table thead th:first-child { width: 28%; }
+  .ws-table thead th:nth-child(2) { width: 32%; }
+  .ws-table thead th:last-child { width: 40%; }
+  .ws-table tbody tr {
     border-bottom: 1px solid var(--nhs-border);
     transition: background 0.2s;
   }
-  .ws-row:last-child { border-bottom: none; }
-  .ws-row:focus-within { background: #f0f7ff; }
-  .ws-row-head {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    margin-bottom: 10px;
+  .ws-table tbody tr:last-child { border-bottom: none; }
+  .ws-table tbody tr:focus-within { background: #f0f7ff; }
+  .ws-table td {
+    padding: 14px 16px;
+    vertical-align: top;
+    font-size: 14px;
+    line-height: 1.55;
   }
-  .ws-num {
-    width: 28px;
-    height: 28px;
-    min-width: 28px;
-    background: var(--nhs-blue);
-    color: #fff;
-    border-radius: 50%;
-    font-size: 13px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 2px;
-  }
-  .ws-label {
-    font-size: 15px;
-    font-weight: 600;
+  .ws-table td:first-child {
+    font-weight: 700;
     color: var(--text);
-    line-height: 1.3;
+    border-right: 1px solid var(--nhs-border);
+    font-size: 13px;
   }
-  .ws-hint {
-    font-size: 12px;
+  .ws-table td:nth-child(2) {
     color: var(--muted);
-    margin-top: 2px;
-  }
-  .ws-example {
-    margin-left: 42px;
-    background: #f8f9fa;
-    border-left: 3px solid var(--nhs-border);
-    border-radius: 0 6px 6px 0;
-    padding: 8px 12px;
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 10px;
     font-style: italic;
+    border-right: 1px solid var(--nhs-border);
+    font-size: 13px;
   }
-  .ws-example strong {
-    display: block;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: #8a9ba8;
-    margin-bottom: 2px;
-    font-style: normal;
-  }
-  textarea, input[type="text"] {
+  .ws-table td:last-child { padding: 10px 12px; }
+  textarea {
     width: 100%;
-    margin-left: 0;
-    padding: 12px 14px;
+    padding: 10px 12px;
     border: 1.5px solid var(--nhs-border);
-    border-radius: 10px;
+    border-radius: 8px;
     font-family: 'DM Sans', sans-serif;
     font-size: 14px;
     color: var(--text);
@@ -404,38 +388,20 @@
     transition: border-color 0.2s, box-shadow 0.2s;
     background: #fff;
     line-height: 1.5;
+    min-height: 80px;
   }
-  textarea:focus, input[type="text"]:focus {
+  textarea:focus {
     outline: none;
     border-color: var(--nhs-blue);
     box-shadow: 0 0 0 3px rgba(0,94,184,0.12);
   }
-  textarea { min-height: 80px; }
-  .feelings-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 10px;
-  }
-  .feeling-chip {
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1.5px solid var(--nhs-border);
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.2s;
-    background: #fff;
-    color: var(--muted);
-    user-select: none;
-  }
-  .feeling-chip:hover { border-color: var(--nhs-blue); color: var(--nhs-blue); }
-  .feeling-chip.selected {
-    background: var(--nhs-blue);
-    border-color: var(--nhs-blue);
-    color: #fff;
-  }
-  .feelings-other {
-    margin-top: 8px;
+  @media (max-width: 560px) {
+    .ws-table thead { display: none; }
+    .ws-table tbody tr { display: block; padding: 14px 16px; }
+    .ws-table td { display: block; border: none !important; padding: 4px 0; }
+    .ws-table td:first-child { font-size: 14px; margin-bottom: 4px; }
+    .ws-table td:nth-child(2)::before { content: 'Example: '; font-weight: 600; font-style: normal; color: var(--muted); }
+    .ws-table td:nth-child(2) { font-size: 12px; margin-bottom: 8px; }
   }
 
   /* ── COMPLETION ── */
@@ -649,12 +615,6 @@
 </head>
 <body>
 
-<!-- TOP BAR -->
-<div class="top-bar">
-  <div class="nhs-logo">NHS</div>
-  <span class="top-bar-label">Every Mind Matters · CBT Self-Help</span>
-</div>
-
 <!-- PROGRESS -->
 <div class="progress-wrap">
   <div class="progress-steps">
@@ -800,98 +760,52 @@
     </div>
 
     <div class="worksheet-body">
-
-      <!-- 1. Situation -->
-      <div class="ws-row">
-        <div class="ws-row-head">
-          <div class="ws-num">1</div>
-          <div>
-            <div class="ws-label">The situation — what happened?</div>
-            <div class="ws-hint">Describe the situation that triggered these thoughts or feelings</div>
-          </div>
-        </div>
-        <div class="ws-example"><strong>Example</strong>I am annoyed at myself for forgetting to run an errand.</div>
-        <textarea id="ws1" placeholder="Describe what happened..." rows="3"></textarea>
-      </div>
-
-      <!-- 2. Feelings -->
-      <div class="ws-row">
-        <div class="ws-row-head">
-          <div class="ws-num">2</div>
-          <div>
-            <div class="ws-label">My feelings — how did this make you feel at first?</div>
-            <div class="ws-hint">Describe how you felt in the moment</div>
-          </div>
-        </div>
-        <div class="ws-example"><strong>Example</strong>Frustrated, stupid, useless.</div>
-        <textarea id="ws2" placeholder="Describe your feelings..." rows="3"></textarea>
-      </div>
-
-      <!-- 3. Unhelpful thoughts -->
-      <div class="ws-row">
-        <div class="ws-row-head">
-          <div class="ws-num">3</div>
-          <div>
-            <div class="ws-label">Unhelpful thoughts I had</div>
-            <div class="ws-hint">What went through your mind? Write the thoughts as they were</div>
-          </div>
-        </div>
-        <div class="ws-example"><strong>Example</strong>I never get anything right. I cannot be trusted with simple tasks.</div>
-        <textarea id="ws3" placeholder="Write your unhelpful thoughts..." rows="3"></textarea>
-      </div>
-
-      <!-- 4. Evidence FOR -->
-      <div class="ws-row">
-        <div class="ws-row-head">
-          <div class="ws-num">4</div>
-          <div>
-            <div class="ws-label">Evidence to support my unhelpful thoughts</div>
-            <div class="ws-hint">What facts seem to back up these thoughts?</div>
-          </div>
-        </div>
-        <div class="ws-example"><strong>Example</strong>It's not the first time I've forgotten something like this.</div>
-        <textarea id="ws4" placeholder="Evidence that supports the thought..." rows="3"></textarea>
-      </div>
-
-      <!-- 5. Evidence AGAINST -->
-      <div class="ws-row">
-        <div class="ws-row-head">
-          <div class="ws-num">5</div>
-          <div>
-            <div class="ws-label">Evidence against my unhelpful thoughts</div>
-            <div class="ws-hint">What facts contradict these thoughts? What am I ignoring?</div>
-          </div>
-        </div>
-        <div class="ws-example"><strong>Example</strong>Everyone forgets things from time to time. I remembered everything else I needed to do.</div>
-        <textarea id="ws5" placeholder="Evidence against the thought..." rows="3"></textarea>
-      </div>
-
-      <!-- 6. Alternative thoughts -->
-      <div class="ws-row">
-        <div class="ws-row-head">
-          <div class="ws-num">6</div>
-          <div>
-            <div class="ws-label">Alternative, neutral or more realistic thoughts</div>
-            <div class="ws-hint">Based on the evidence, how could you think about this differently?</div>
-          </div>
-        </div>
-        <div class="ws-example"><strong>Example</strong>I remember to do far more errands than I forget. Most of the time I am trustworthy and reliable.</div>
-        <textarea id="ws6" placeholder="A more balanced way to see this..." rows="3"></textarea>
-      </div>
-
-      <!-- 7. How I feel now -->
-      <div class="ws-row">
-        <div class="ws-row-head">
-          <div class="ws-num">7</div>
-          <div>
-            <div class="ws-label">How I feel now — after completing my thought record</div>
-            <div class="ws-hint">Has anything shifted? Even small changes are worth noting</div>
-          </div>
-        </div>
-        <div class="ws-example"><strong>Example</strong>Calmer, more confident in myself. Accepting that sometimes forgetting things is perfectly normal.</div>
-        <textarea id="ws7" placeholder="How do you feel after this exercise?" rows="3"></textarea>
-      </div>
-
+      <table class="ws-table">
+        <thead>
+          <tr>
+            <th>Prompt</th>
+            <th>Example</th>
+            <th>My thoughts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. Situation — what happened?</td>
+            <td>I am annoyed at myself for forgetting to run an errand.</td>
+            <td><textarea id="ws1" placeholder="Write here..."></textarea></td>
+          </tr>
+          <tr>
+            <td>2. My feelings — how this made me feel at first</td>
+            <td>Frustrated, stupid, useless.</td>
+            <td><textarea id="ws2" placeholder="Write here..."></textarea></td>
+          </tr>
+          <tr>
+            <td>3. Unhelpful thoughts I had</td>
+            <td>I never get anything right. I cannot be trusted with simple tasks.</td>
+            <td><textarea id="ws3" placeholder="Write here..."></textarea></td>
+          </tr>
+          <tr>
+            <td>4. Evidence to support my unhelpful thoughts</td>
+            <td>It's not the first time I've forgotten something like this.</td>
+            <td><textarea id="ws4" placeholder="Write here..."></textarea></td>
+          </tr>
+          <tr>
+            <td>5. Evidence against my unhelpful thoughts</td>
+            <td>Everyone forgets things from time to time, and I remembered everything else I needed to do. I'm usually reliable when it comes to errands.</td>
+            <td><textarea id="ws5" placeholder="Write here..."></textarea></td>
+          </tr>
+          <tr>
+            <td>6. Alternative neutral or more realistic thoughts</td>
+            <td>I remember to do far more errands than I forget. It's happened before but not often — it's just that the forgotten ones stick in my memory. Most of the time I am trustworthy and reliable.</td>
+            <td><textarea id="ws6" placeholder="Write here..."></textarea></td>
+          </tr>
+          <tr>
+            <td>7. How I feel now — after completing my thought record</td>
+            <td>Calmer, more confident in myself — I am neither stupid nor useless. Accepting that sometimes forgetting things is perfectly normal.</td>
+            <td><textarea id="ws7" placeholder="Write here..."></textarea></td>
+          </tr>
+        </tbody>
+      </table>
     </div><!-- end worksheet-body -->
 
     <div class="btn-row">
