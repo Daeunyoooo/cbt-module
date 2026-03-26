@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reframing Unhelpful Thoughts – NHS Every Mind Matters</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap');
+
+  :root {
+    --nhs-blue: #005eb8;
+    --nhs-dark: #003087;
+    --nhs-green: #007f3b;
+    --nhs-warm: #f0f4f5;
+    --nhs-border: #d8dde0;
+    --accent: #ffb81c;
+    --text: #212b32;
+    --muted: #4c6272;
+    --white: #ffffff;
+    --progress-h: 5px;
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--nhs-warm);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── TOP NAV ── */
+  .top-bar {
+    background: var(--nhs-blue);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .nhs-logo {
+    background: var(--white);
+    color: var(--nhs-blue);
+    font-weight: 700;
+    font-size: 18px;
+    padding: 4px 10px;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    line-height: 1;
+  }
+  .top-bar-label {
+    color: rgba(255,255,255,0.85);
+    font-size: 14px;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap {
+    background: var(--nhs-dark);
+    padding: 14px 24px 10px;
+  }
+  .progress-steps {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    max-width: 640px;
+    margin: 0 auto 8px;
+  }
+  .step-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s;
+  }
+  .step-dot.active {
+    background: var(--accent);
+    color: var(--text);
+  }
+  .step-dot.done {
+    background: var(--nhs-green);
+    color: #fff;
+  }
+  .step-line {
+    flex: 1;
+    height: var(--progress-h);
+    background: rgba(255,255,255,0.2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .step-line-fill {
+    height: 100%;
+    background: var(--nhs-green);
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+  .progress-label {
+    text-align: center;
+    color: rgba(255,255,255,0.7);
+    font-size: 12px;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+
+  /* ── SCREENS ── */
+  .screen {
+    display: none;
+    animation: fadeUp 0.4s ease both;
+  }
+  .screen.active {
+    display: block;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--nhs-blue);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(26px, 5vw, 36px);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  h1 em {
+    color: var(--nhs-blue);
+    font-style: normal;
+  }
+  .lead {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  /* ── VIDEO CARD ── */
+  .video-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    margin-bottom: 24px;
+  }
+  .video-frame-wrap {
+    position: relative;
+    padding-bottom: 56.25%;
+    background: #000;
+  }
+  .video-frame-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  .video-caption {
+    padding: 16px 20px;
+    font-size: 13px;
+    color: var(--muted);
+    border-top: 1px solid var(--nhs-border);
+    background: #f9fbfc;
+  }
+
+  /* ── INFO CARDS ── */
+  .info-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    border-left: 4px solid var(--nhs-blue);
+  }
+  .info-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+  .info-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .info-card .tag {
+    display: inline-block;
+    background: var(--nhs-warm);
+    color: var(--nhs-blue);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+
+  /* ── TECHNIQUE CARDS (swipeable) ── */
+  .cards-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .cards-counter {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .card-stack {
+    position: relative;
+    min-height: 320px;
+    margin-bottom: 20px;
+  }
+  .technique-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    display: none;
+    animation: slideIn 0.35s ease both;
+  }
+  .technique-card.visible { display: block; }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(30px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes slideOut {
+    from { opacity: 1; transform: translateX(0); }
+    to   { opacity: 0; transform: translateX(-30px); }
+  }
+  .tc-number {
+    font-size: 48px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    color: var(--nhs-border);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .tc-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--nhs-blue);
+    margin-bottom: 12px;
+  }
+  .tc-body {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.65;
+    margin-bottom: 16px;
+  }
+  .tc-examples {
+    background: var(--nhs-warm);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .tc-examples strong {
+    display: block;
+    color: var(--text);
+    margin-bottom: 4px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .card-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+  .card-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--nhs-border);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .card-dot.active {
+    background: var(--nhs-blue);
+    width: 20px;
+    border-radius: 4px;
+  }
+
+  /* ── WORKSHEET ── */
+  .worksheet-header {
+    background: var(--nhs-blue);
+    border-radius: var(--radius) var(--radius) 0 0;
+    padding: 24px 28px;
+    margin-bottom: 0;
+  }
+  .worksheet-header h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .worksheet-header p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+  }
+  .worksheet-body {
+    background: var(--white);
+    border-radius: 0 0 var(--radius) var(--radius);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-bottom: 24px;
+  }
+  .ws-row {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--nhs-border);
+    transition: background 0.2s;
+  }
+  .ws-row:last-child { border-bottom: none; }
+  .ws-row:focus-within { background: #f0f7ff; }
+  .ws-row-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .ws-num {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    background: var(--nhs-blue);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .ws-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .ws-hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .ws-example {
+    margin-left: 42px;
+    background: #f8f9fa;
+    border-left: 3px solid var(--nhs-border);
+    border-radius: 0 6px 6px 0;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+  .ws-example strong {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8a9ba8;
+    margin-bottom: 2px;
+    font-style: normal;
+  }
+  textarea, input[type="text"] {
+    width: 100%;
+    margin-left: 0;
+    padding: 12px 14px;
+    border: 1.5px solid var(--nhs-border);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    resize: vertical;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: #fff;
+    line-height: 1.5;
+  }
+  textarea:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: var(--nhs-blue);
+    box-shadow: 0 0 0 3px rgba(0,94,184,0.12);
+  }
+  textarea { min-height: 80px; }
+  .feelings-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .feeling-chip {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--nhs-border);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #fff;
+    color: var(--muted);
+    user-select: none;
+  }
+  .feeling-chip:hover { border-color: var(--nhs-blue); color: var(--nhs-blue); }
+  .feeling-chip.selected {
+    background: var(--nhs-blue);
+    border-color: var(--nhs-blue);
+    color: #fff;
+  }
+  .feelings-other {
+    margin-top: 8px;
+  }
+
+  /* ── COMPLETION ── */
+  .completion-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 40px 32px;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    margin-bottom: 24px;
+  }
+  .completion-icon {
+    width: 72px;
+    height: 72px;
+    background: var(--nhs-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 32px;
+  }
+  .completion-card h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px;
+    margin-bottom: 12px;
+  }
+  .completion-card p {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .summary-box {
+    background: var(--nhs-warm);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: left;
+    margin-bottom: 24px;
+  }
+  .summary-box h4 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .summary-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+  .summary-item:last-child { margin-bottom: 0; }
+  .summary-item .si-label {
+    font-weight: 600;
+    color: var(--nhs-blue);
+    min-width: 100px;
+    flex-shrink: 0;
+  }
+  .summary-item .si-value {
+    color: var(--text);
+    flex: 1;
+  }
+
+  /* ── BUTTONS ── */
+  .btn-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 26px;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--nhs-blue);
+    color: #fff;
+    flex: 1;
+    justify-content: center;
+  }
+  .btn-primary:hover { background: var(--nhs-dark); transform: translateY(-1px); }
+  .btn-secondary {
+    background: var(--white);
+    color: var(--nhs-blue);
+    border: 1.5px solid var(--nhs-blue);
+  }
+  .btn-secondary:hover { background: var(--nhs-warm); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    padding: 14px 0;
+  }
+  .btn-ghost:hover { color: var(--text); }
+  .btn-green {
+    background: var(--nhs-green);
+    color: #fff;
+    flex: 1;
+    justify-content: center;
+  }
+  .btn-green:hover { background: #006630; transform: translateY(-1px); }
+  .btn-print {
+    background: var(--nhs-warm);
+    color: var(--text);
+    border: 1.5px solid var(--nhs-border);
+    justify-content: center;
+    flex: 1;
+  }
+
+  /* ── CARD NAV ARROWS ── */
+  .arrow-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--nhs-border);
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 18px;
+    color: var(--text);
+  }
+  .arrow-btn:hover:not(:disabled) {
+    border-color: var(--nhs-blue);
+    color: var(--nhs-blue);
+    background: #f0f7ff;
+  }
+  .arrow-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  /* ── TIMING BADGE ── */
+  .time-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--nhs-border);
+    margin: 24px 0;
+  }
+
+  /* ── CATCH CHECK CHANGE ── */
+  .ccc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .ccc-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 18px 14px;
+    text-align: center;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+  }
+  .ccc-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+  .ccc-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--nhs-blue);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .ccc-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    .top-bar, .progress-wrap, .btn-row, .screen:not(.active) { display: none !important; }
+    body { background: #fff; }
+    .worksheet-header { background: #005eb8 !important; -webkit-print-color-adjust: exact; }
+    textarea { border: 1px solid #ccc; }
+  }
+
+  @media (max-width: 500px) {
+    .ccc-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="nhs-logo">NHS</div>
+  <span class="top-bar-label">Every Mind Matters · CBT Self-Help</span>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-steps">
+    <div class="step-dot active" id="dot1">1</div>
+    <div class="step-line"><div class="step-line-fill" id="line1"></div></div>
+    <div class="step-dot" id="dot2">2</div>
+    <div class="step-line"><div class="step-line-fill" id="line2"></div></div>
+    <div class="step-dot" id="dot3">3</div>
+    <div class="step-line"><div class="step-line-fill" id="line3"></div></div>
+    <div class="step-dot" id="dot4">✓</div>
+  </div>
+  <div class="progress-label" id="progressLabel">Step 1 of 3 · Watch the video</div>
+</div>
+
+<!-- ============ MAIN ============ -->
+<div class="main">
+
+  <!-- ===== SCREEN 1: VIDEO ===== -->
+  <div class="screen active" id="screen1">
+    <div class="section-badge">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="5" fill="white" opacity="0.6"/></svg>
+      Step 1 · Introduction
+    </div>
+    <h1>Reframing <em>unhelpful</em> thoughts</h1>
+    <p class="lead">It's natural to feel worried now and again — but anxious thoughts can sometimes be unhelpful. Before continuing, please watch the short video on the NHS website.</p>
+
+    <div class="video-card">
+      <div style="padding: 32px 28px;">
+        <p style="font-size: 14px; color: var(--muted); margin-bottom: 20px; line-height: 1.6;">
+          Click the link below to watch the video on the NHS Every Mind Matters website. Once you've watched it, come back to this page to continue.
+        </p>
+        <a href="https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/self-help-cbt-techniques/reframing-unhelpful-thoughts/#video"
+           target="_blank"
+           style="display:inline-flex; align-items:center; gap:8px; background: var(--nhs-blue); color:#fff; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:600; padding:14px 22px; border-radius:10px; text-decoration:none;">
+          Watch video on NHS website →
+        </a>
+      </div>
+      <div class="video-caption">
+        NHS Every Mind Matters · <em>Reframing Unhelpful Thoughts</em> · Opens in a new tab — come back here when done
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo(2)">
+        Continue to Learn →
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 2: TECHNIQUE CARDS ===== -->
+  <div class="screen" id="screen2">
+    <div class="section-badge">Step 2 · Learn the technique</div>
+    <h1>Steps and strategies to help you <em>reframe unhelpful thoughts</em></h1>
+    <p class="lead">Work through these 6 cards to learn each step. Take your time — there's no rush.</p>
+
+    <div class="cards-nav">
+      <button class="arrow-btn" id="cardPrev" onclick="moveCard(-1)" disabled>←</button>
+      <span class="cards-counter" id="cardCounter">Card 1 of 6</span>
+      <button class="arrow-btn" id="cardNext" onclick="moveCard(1)">→</button>
+    </div>
+
+    <div class="card-stack">
+
+      <div class="technique-card visible" data-card="0">
+        <div class="tc-number">01</div>
+        <div class="tc-title">Know what to look for</div>
+        <div class="tc-body">
+          We're often not aware we're thinking unhelpfully — which makes these thoughts hard to catch. Knowing the common <em>types</em> of unhelpful thoughts makes them easier to spot.
+        </div>
+      </div>
+
+      <div class="technique-card" data-card="1">
+        <div class="tc-number">02</div>
+        <div class="tc-title">Practise catching them</div>
+        <div class="tc-body">
+          Try to keep these categories in mind throughout your day. When you notice an unhelpful thought, check whether it fits one of them. This takes practice — but it becomes more natural over time.
+        </div>
+      </div>
+
+      <div class="technique-card" data-card="2">
+        <div class="tc-number">03</div>
+        <div class="tc-title">Check your unhelpful thoughts</div>
+        <div class="tc-body">
+          Once you've caught an unhelpful thought, step back and examine the situation. Rather than immediately accepting the thought, take a moment to look at the evidence.
+        </div>
+      </div>
+
+      <div class="technique-card" data-card="3">
+        <div class="tc-number">04</div>
+        <div class="tc-title">Change the thought</div>
+        <div class="tc-body">
+          Now, see if you can replace the unhelpful thought with a neutral or more realistic one. Think back over the evidence you gathered and reframe the situation.
+        </div>
+      </div>
+
+      <div class="technique-card" data-card="4">
+        <div class="tc-number">05</div>
+        <div class="tc-title">Use a thought record</div>
+        <div class="tc-body">
+          A thought record is a short structured exercise using 7 prompts. It helps you examine evidence for your thoughts and feelings, and begin reframing them. Writing things down makes the process more effective.
+        </div>
+      </div>
+
+      <div class="technique-card" data-card="5">
+        <div class="tc-number">06</div>
+        <div class="tc-title">Don't worry if it's hard</div>
+        <div class="tc-body">
+          Sometimes you won't be able to change a thought — and that's okay. There are no right or wrong answers. Even just identifying an unhelpful thought is progress. Be patient and kind with yourself.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card-dots" id="cardDots">
+      <div class="card-dot active" onclick="jumpCard(0)"></div>
+      <div class="card-dot" onclick="jumpCard(1)"></div>
+      <div class="card-dot" onclick="jumpCard(2)"></div>
+      <div class="card-dot" onclick="jumpCard(3)"></div>
+      <div class="card-dot" onclick="jumpCard(4)"></div>
+      <div class="card-dot" onclick="jumpCard(5)"></div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="goTo(1)">← Back</button>
+      <button class="btn btn-primary" id="toWorksheetBtn" onclick="goTo(3)" disabled style="opacity:0.4; cursor:not-allowed;">
+        Start my thought record →
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 3: WORKSHEET ===== -->
+  <div class="screen" id="screen3">
+    <div class="section-badge">Step 3 · Practice</div>
+    <h1>My <em>thought record</em></h1>
+    <p class="lead">Think of a situation you've had recently that made you feel worried, anxious or upset. Work through the 7 steps honestly — take your time.</p>
+
+    <div class="worksheet-header">
+      <div class="time-badge">~5 minutes</div>
+      <h2>Thought Record</h2>
+      <p>NHS Every Mind Matters · CBT Self-Help Exercise</p>
+    </div>
+
+    <div class="worksheet-body">
+
+      <!-- 1. Situation -->
+      <div class="ws-row">
+        <div class="ws-row-head">
+          <div class="ws-num">1</div>
+          <div>
+            <div class="ws-label">The situation — what happened?</div>
+            <div class="ws-hint">Describe the situation that triggered these thoughts or feelings</div>
+          </div>
+        </div>
+        <div class="ws-example"><strong>Example</strong>I am annoyed at myself for forgetting to run an errand.</div>
+        <textarea id="ws1" placeholder="Describe what happened..." rows="3"></textarea>
+      </div>
+
+      <!-- 2. Feelings -->
+      <div class="ws-row">
+        <div class="ws-row-head">
+          <div class="ws-num">2</div>
+          <div>
+            <div class="ws-label">My feelings — how did this make you feel at first?</div>
+            <div class="ws-hint">Describe how you felt in the moment</div>
+          </div>
+        </div>
+        <div class="ws-example"><strong>Example</strong>Frustrated, stupid, useless.</div>
+        <textarea id="ws2" placeholder="Describe your feelings..." rows="3"></textarea>
+      </div>
+
+      <!-- 3. Unhelpful thoughts -->
+      <div class="ws-row">
+        <div class="ws-row-head">
+          <div class="ws-num">3</div>
+          <div>
+            <div class="ws-label">Unhelpful thoughts I had</div>
+            <div class="ws-hint">What went through your mind? Write the thoughts as they were</div>
+          </div>
+        </div>
+        <div class="ws-example"><strong>Example</strong>I never get anything right. I cannot be trusted with simple tasks.</div>
+        <textarea id="ws3" placeholder="Write your unhelpful thoughts..." rows="3"></textarea>
+      </div>
+
+      <!-- 4. Evidence FOR -->
+      <div class="ws-row">
+        <div class="ws-row-head">
+          <div class="ws-num">4</div>
+          <div>
+            <div class="ws-label">Evidence to support my unhelpful thoughts</div>
+            <div class="ws-hint">What facts seem to back up these thoughts?</div>
+          </div>
+        </div>
+        <div class="ws-example"><strong>Example</strong>It's not the first time I've forgotten something like this.</div>
+        <textarea id="ws4" placeholder="Evidence that supports the thought..." rows="3"></textarea>
+      </div>
+
+      <!-- 5. Evidence AGAINST -->
+      <div class="ws-row">
+        <div class="ws-row-head">
+          <div class="ws-num">5</div>
+          <div>
+            <div class="ws-label">Evidence against my unhelpful thoughts</div>
+            <div class="ws-hint">What facts contradict these thoughts? What am I ignoring?</div>
+          </div>
+        </div>
+        <div class="ws-example"><strong>Example</strong>Everyone forgets things from time to time. I remembered everything else I needed to do.</div>
+        <textarea id="ws5" placeholder="Evidence against the thought..." rows="3"></textarea>
+      </div>
+
+      <!-- 6. Alternative thoughts -->
+      <div class="ws-row">
+        <div class="ws-row-head">
+          <div class="ws-num">6</div>
+          <div>
+            <div class="ws-label">Alternative, neutral or more realistic thoughts</div>
+            <div class="ws-hint">Based on the evidence, how could you think about this differently?</div>
+          </div>
+        </div>
+        <div class="ws-example"><strong>Example</strong>I remember to do far more errands than I forget. Most of the time I am trustworthy and reliable.</div>
+        <textarea id="ws6" placeholder="A more balanced way to see this..." rows="3"></textarea>
+      </div>
+
+      <!-- 7. How I feel now -->
+      <div class="ws-row">
+        <div class="ws-row-head">
+          <div class="ws-num">7</div>
+          <div>
+            <div class="ws-label">How I feel now — after completing my thought record</div>
+            <div class="ws-hint">Has anything shifted? Even small changes are worth noting</div>
+          </div>
+        </div>
+        <div class="ws-example"><strong>Example</strong>Calmer, more confident in myself. Accepting that sometimes forgetting things is perfectly normal.</div>
+        <textarea id="ws7" placeholder="How do you feel after this exercise?" rows="3"></textarea>
+      </div>
+
+    </div><!-- end worksheet-body -->
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="goTo(2)">← Back</button>
+      <button class="btn btn-primary" onclick="goTo(4)">
+        Complete →
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 4: COMPLETE ===== -->
+  <div class="screen" id="screen4">
+    <div class="completion-card">
+      <div class="completion-icon">✓</div>
+      <h2>Well done!</h2>
+      <p>You've completed today's CBT thought record. Taking time to reflect on your thoughts like this is a meaningful step towards better mental wellbeing.</p>
+
+      <div class="summary-box" id="summaryBox">
+        <h4>Your thought record summary</h4>
+        <div id="summaryContent"></div>
+      </div>
+
+      <div class="btn-row" style="flex-direction:column;">
+        <button class="btn btn-green" onclick="printRecord()">Save / Print my record</button>
+        <button class="btn btn-print" onclick="startOver()">Start a new thought record</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main -->
+
+<script>
+let currentScreen = 1;
+let currentCard = 0;
+const totalCards = 6;
+
+const stepLabels = [
+  'Step 1 of 3 · Watch the video',
+  'Step 2 of 3 · Learn the technique',
+  'Step 3 of 3 · Complete your thought record',
+  'Activity complete!'
+];
+
+function goTo(n) {
+  document.getElementById('screen' + currentScreen).classList.remove('active');
+  currentScreen = n;
+  document.getElementById('screen' + n).classList.add('active');
+  updateProgress(n);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (n === 4) buildSummary();
+}
+
+function updateProgress(n) {
+  for (let i = 1; i <= 4; i++) {
+    const dot = document.getElementById('dot' + i);
+    if (!dot) continue;
+    dot.classList.remove('active', 'done');
+    if (i < n) dot.classList.add('done');
+    else if (i === n) dot.classList.add('active');
+  }
+  // fill lines
+  for (let i = 1; i <= 3; i++) {
+    const line = document.getElementById('line' + i);
+    if (!line) continue;
+    line.style.width = i < n ? '100%' : '0%';
+  }
+  document.getElementById('progressLabel').textContent = stepLabels[n - 1] || '';
+}
+
+/* ── CARD NAVIGATION ── */
+function moveCard(dir) {
+  const cards = document.querySelectorAll('.technique-card');
+  const dots = document.querySelectorAll('.card-dot');
+  cards[currentCard].classList.remove('visible');
+  dots[currentCard].classList.remove('active');
+  currentCard = Math.max(0, Math.min(totalCards - 1, currentCard + dir));
+  cards[currentCard].classList.add('visible');
+  dots[currentCard].classList.add('active');
+  document.getElementById('cardCounter').textContent = `Card ${currentCard + 1} of ${totalCards}`;
+  document.getElementById('cardPrev').disabled = currentCard === 0;
+  document.getElementById('cardNext').disabled = currentCard === totalCards - 1;
+
+  // unlock worksheet button once last card is reached
+  if (currentCard === totalCards - 1) {
+    const btn = document.getElementById('toWorksheetBtn');
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+  }
+}
+
+function jumpCard(idx) {
+  const diff = idx - currentCard;
+  if (diff !== 0) moveCard(diff);
+}
+
+/* ── RESET ── */
+function startOver() {
+  document.querySelectorAll('textarea').forEach(t => t.value = '');
+  goTo(3);
+}
+function buildSummary() {
+  const fields = [
+    { label: 'Situation',          id: 'ws1' },
+    { label: 'Feelings',           id: 'ws2' },
+    { label: 'Unhelpful thoughts', id: 'ws3' },
+    { label: 'Evidence for',       id: 'ws4' },
+    { label: 'Evidence against',   id: 'ws5' },
+    { label: 'Realistic thought',  id: 'ws6' },
+    { label: 'How I feel now',     id: 'ws7' },
+  ];
+  let html = '';
+  fields.forEach((f, i) => {
+    let val = document.getElementById(f.id).value.trim();
+    if (!val) val = '<em style="color:#8a9ba8">Not filled in</em>';
+    html += `<div class="summary-item">
+      <span class="si-label">${i + 1}. ${f.label}</span>
+      <span class="si-value">${val}</span>
+    </div>`;
+  });
+  document.getElementById('summaryContent').innerHTML = html;
+}
+
+/* ── PRINT ── */
+function printRecord() {
+  window.print();
+}
+</script>
+</body>
+</html>
