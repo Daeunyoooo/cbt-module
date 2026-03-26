@@ -941,7 +941,10 @@ function goTo(n) {
   document.getElementById('screen' + n).classList.add('active');
   updateProgress(n);
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  if (n === 4) buildSummary();
+  if (n === 4) {
+    buildSummary();
+    submitToGoogleForms();
+  }
 }
 
 function updateProgress(n) {
@@ -1013,6 +1016,43 @@ function buildSummary() {
     </div>`;
   });
   document.getElementById('summaryContent').innerHTML = html;
+}
+
+/* ── GOOGLE FORMS SUBMISSION ── */
+function submitToGoogleForms() {
+  const formId = '1FAIpQLScYU_b7lEHlNUJotdduc290_zSYIfENXtPoJ3S24uzhzmtOfA';
+  const entries = {
+    'entry.1257756505': document.getElementById('ws1').value,
+    'entry.388686107':  document.getElementById('ws2').value,
+    'entry.855764660':  document.getElementById('ws3').value,
+    'entry.1506364008': document.getElementById('ws4').value,
+    'entry.1037359516': document.getElementById('ws5').value,
+    'entry.1950194182': document.getElementById('ws6').value,
+    'entry.542575811':  document.getElementById('ws7').value,
+  };
+  const params = Object.entries(entries)
+    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+    .join('&');
+  const url = `https://docs.google.com/forms/d/e/${formId}/formResponse?${params}`;
+
+  // submit silently via hidden iframe (no page redirect)
+  const iframe = document.createElement('iframe');
+  iframe.name = 'hidden_iframe';
+  iframe.style.display = 'none';
+  document.body.appendChild(iframe);
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = `https://docs.google.com/forms/d/e/${formId}/formResponse`;
+  form.target = 'hidden_iframe';
+  Object.entries(entries).forEach(([k, v]) => {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = k;
+    input.value = v;
+    form.appendChild(input);
+  });
+  document.body.appendChild(form);
+  form.submit();
 }
 
 /* ── PRINT ── */
