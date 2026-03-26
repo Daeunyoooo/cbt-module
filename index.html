@@ -1018,41 +1018,24 @@ function buildSummary() {
   document.getElementById('summaryContent').innerHTML = html;
 }
 
-/* ── GOOGLE FORMS SUBMISSION ── */
+/* ── GOOGLE APPS SCRIPT SUBMISSION ── */
 function submitToGoogleForms() {
-  const formId = '1FAIpQLScYU_b7lEHlNUJotdduc290_zSYIfENXtPoJ3S24uzhzmtOfA';
-  const entries = {
-    'entry.1257756505': document.getElementById('ws1').value,
-    'entry.388686107':  document.getElementById('ws2').value,
-    'entry.855764660':  document.getElementById('ws3').value,
-    'entry.1506364008': document.getElementById('ws4').value,
-    'entry.1037359516': document.getElementById('ws5').value,
-    'entry.1950194182': document.getElementById('ws6').value,
-    'entry.542575811':  document.getElementById('ws7').value,
+  const url = 'https://script.google.com/a/macros/uw.edu/s/AKfycbxy7DIjFgwAbBKvyXA0YaLG7hJHgR8nsfm99LQUYoxZDLiD_hnQF_XEDxkR80wvHEGy/exec';
+  const data = {
+    ws1: document.getElementById('ws1').value,
+    ws2: document.getElementById('ws2').value,
+    ws3: document.getElementById('ws3').value,
+    ws4: document.getElementById('ws4').value,
+    ws5: document.getElementById('ws5').value,
+    ws6: document.getElementById('ws6').value,
+    ws7: document.getElementById('ws7').value,
   };
-  const params = Object.entries(entries)
-    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
-    .join('&');
-  const url = `https://docs.google.com/forms/d/e/${formId}/formResponse?${params}`;
-
-  // submit silently via hidden iframe (no page redirect)
-  const iframe = document.createElement('iframe');
-  iframe.name = 'hidden_iframe';
-  iframe.style.display = 'none';
-  document.body.appendChild(iframe);
-  const form = document.createElement('form');
-  form.method = 'POST';
-  form.action = `https://docs.google.com/forms/d/e/${formId}/formResponse`;
-  form.target = 'hidden_iframe';
-  Object.entries(entries).forEach(([k, v]) => {
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = k;
-    input.value = v;
-    form.appendChild(input);
+  fetch(url, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
   });
-  document.body.appendChild(form);
-  form.submit();
 }
 
 /* ── PRINT ── */
